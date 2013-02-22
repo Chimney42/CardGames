@@ -47,39 +47,42 @@ public class DealerTest extends TestCase{
 
     @Test
     public void testDealerShouldDistributeAllCardsInADeckToPlayers() {
-        Player[] players = this.setUpPlayers(2);
+        HashMap<String, Player> players = this.setUpPlayers(2);
         List<Card> deck = this.dealer.getShuffledFrenchDeck();
+        int originalDeckSize = deck.size();
 
         this.dealer.distributeAllCardsToPlayers(deck, players);
 
-        assertEquals(deck.size() / players.length, players[0].getHand().size());
-        assertEquals(deck.size() / players.length, players[1].getHand().size());
+        assertEquals(originalDeckSize / players.size(), players.get("foo0").getHand().size());
+        assertEquals(originalDeckSize / players.size(), players.get("foo1").getHand().size());
     }
 
     @Test
     public void testDealerShouldDistributeNumberOfCardsInADeckToPlayers() {
         int numberOfCardsPerPlayer = 2;
-        Player[] players = this.setUpPlayers(2);
+        HashMap<String, Player> players = this.setUpPlayers(2);
         List<Card> deck = this.dealer.getShuffledFrenchDeck();
         int originalDeckSize = deck.size();
 
         this.dealer.distributeNumberOfCardsToPlayers(deck, players, numberOfCardsPerPlayer);
 
-        assertEquals(numberOfCardsPerPlayer, players[0].getHand().size());
-        assertEquals(numberOfCardsPerPlayer, players[1].getHand().size());
-        assertEquals(originalDeckSize - (numberOfCardsPerPlayer * players.length), deck.size());
+        assertEquals(numberOfCardsPerPlayer, players.get("foo0").getHand().size());
+        assertEquals(numberOfCardsPerPlayer, players.get("foo1").getHand().size());
+        assertEquals(originalDeckSize - (numberOfCardsPerPlayer * players.size()), deck.size());
     }
 
     private int countUniqueEntries(List<Card> frenchDeck) {
         return new HashSet<Card>(frenchDeck).size();
     }
 
-    private Player[] setUpPlayers(int number) {
-        Player[] players = new Player[number];
+    private HashMap<String, Player> setUpPlayers(int number) {
+        HashMap<String, Player> players = new HashMap<String, Player>();
 
+        String name = "foo";
         for (int i = 0; i < number; i++) {
-            players[i] = new Player();
+            players.put(name + i, new Player(name + i));
         }
+
         return players;
     }
 }

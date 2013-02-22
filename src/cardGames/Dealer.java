@@ -36,24 +36,31 @@ public class Dealer {
         return shuffledFrenchDeck;
     }
 
-    public void distributeAllCardsToPlayers(List<Card> deck, Player[] players) {
+    public void distributeAllCardsToPlayers(List<Card> deck, HashMap<String, Player> players) {
 
-        if (0 == deck.size() % players.length) {
-            for (int i = 0; i < deck.size(); i++) {
-                int index = i % players.length;
-                players[index].addCardToHand(deck.get(i));
+        if (0 == deck.size() % players.size()) {
+            int originalDeckSize = deck.size();
+            for (int i = 0; i < (originalDeckSize / players.size()); i++) {
+                Iterator<Map.Entry<String, Player>> iterator = players.entrySet().iterator();
+                while (iterator.hasNext()) {
+                    Map.Entry<String, Player> entry = (Map.Entry) iterator.next();
+                    entry.getValue().addCardToHand(deck.get(0));
+                    deck.remove(0);
+                }
             }
         }
     }
 
-    public void distributeNumberOfCardsToPlayers(List<Card> deck, Player[] players, int numberOfCardsPerPlayer) {
-        if (numberOfCardsPerPlayer <= deck.size() / players.length) {
-            int originalDeckSize = deck.size();
-            for (int i = deck.size() - 1; i >= originalDeckSize - (numberOfCardsPerPlayer * players.length); i--) {
-                int index = i % players.length;
-                players[index].addCardToHand(deck.get(i));
-                deck.remove(i);
-            }
+    public void distributeNumberOfCardsToPlayers(List<Card> deck, HashMap<String, Player> players, int numberOfCardsPerPlayer) {
+        if (numberOfCardsPerPlayer <= deck.size() / players.size()) {
+           for (int i = 0; i < numberOfCardsPerPlayer; i++) {
+               Iterator<Map.Entry<String, Player>> iterator = players.entrySet().iterator();
+               while (iterator.hasNext()) {
+                   Map.Entry<String, Player> entry = (Map.Entry) iterator.next();
+                   entry.getValue().addCardToHand(deck.get(0));
+                   deck.remove(0);
+               }
+           }
         }
     }
 
