@@ -7,4 +7,7 @@ package cardGames;
  */
 public interface GameState {
 
+    public void addPlayer(String name, Player player);
+
+    public Player getPlayer(String name);
 }
