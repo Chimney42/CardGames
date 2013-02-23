@@ -10,6 +10,8 @@ public interface Game {
     //Initialize game
     public void init(GameState gameState);
 
+    public void doGame(GameState gameState);
+
     //dynamically create corresponding GameState
     public GameState getInitialGameState();
 }

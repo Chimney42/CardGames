@@ -26,4 +26,8 @@ public class BlackJackClassicGameState implements BlackJackGameState {
     public Player getPlayer(String name) {
         return this.players.get(name);
     }
+
+    public HashMap<String, Player> getPlayers() {
+        return this.players;
+    }
 }

@@ -1,5 +1,6 @@
 package cardGames.blackJack.blackJackClassic;
 
+import cardGames.Dealer;
 import cardGames.GameState;
 import cardGames.Player;
 import cardGames.blackJack.BlackJack;
@@ -10,16 +11,24 @@ import cardGames.blackJack.BlackJack;
  */
 public class BlackJackClassic implements BlackJack {
 
+    private Dealer dealer;
+
     //Initialize game
     public void init(GameState gameState) {
         //Set up Player for the bank
-        Player bank = new Player();
+        Player bank = new Player("Bank");
         gameState.addPlayer("Bank", bank);
+        this.dealer = new Dealer();
     }
 
-    // On Startup, a full random deck is used and 2 cards are given to each player
-    public void giveCards() {
+    //Do One Round
+    public void doGame(GameState gameState) {
+        startRound(gameState);
+    }
 
+    public void startRound(GameState gameState) {
+        //On Startup, a full random deck is used and 2 cards are given to each player
+        dealer.distributeNumberOfCardsToPlayers(dealer.getShuffledFrenchDeck(), gameState.getPlayers(), 2);
     }
 
     // Each player has the possibility to add one additional card to his hand, when it's his turn

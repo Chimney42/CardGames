@@ -15,7 +15,6 @@ import java.util.Scanner;
 public class GameHandler {
 
     private Game game;
-    private Dealer dealer;
     private GameState gameState;
 
     public GameHandler(Game game) {
@@ -26,16 +25,19 @@ public class GameHandler {
     public void init() {
         this.game.init(this.gameState);
 
-        //Add Player with Userinput
-        addPlayerWithUserInput();
+        //Add Player
+        addPlayer("foo");
+    }
 
+    public void doGame() {
+        this.game.doGame(this.gameState);
     }
 
     private void addPlayerWithUserInput() {
         System.out.println("Enter Name");
         try {
             Scanner scanner = new Scanner(System.in);
-            String name = scanner.nextLine();
+            String name = scanner.next();
 
             this.addPlayer(name);
         } catch (Exception e) {
